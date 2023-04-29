@@ -5,3 +5,13 @@ GET http://localhost:3000/
 GET http://localhost:3000/contacts
 ###
 GET http://localhost:3000/contacts/644d4435b47de330fdfaca67
+
+// RENDER
+###
+GET https://cse341-5he8.onrender.com/contacts
+###
+GET https://cse341-5he8.onrender.com/contacts/644d4435b47de330fdfaca67
+###
+GET https://cse341-5he8.onrender.com/contacts/644d455ab47de330fdfaca6a
+###
+GET https://cse341-5he8.onrender.com/contacts/644d4637b47de330fdfaca6b
