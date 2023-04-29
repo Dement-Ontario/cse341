@@ -1,9 +1,25 @@
 const express = require('express');
+const dotenv = require("dotenv");
+const mongodb = require('./db/connect');
+
+dotenv.config();
+const port = process.env.port || 3000;
 const app = express();
 
-const port = 3000;
+// app and mongodb.initDb code from solution
 
-app.use('/', require('./routes'));
+app
+    .use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        next();
+    })
+    .use('/', require('./routes'));
 
-app.listen(process.env.port || port);
-console.log('Web Server is listening at port '+ (process.env.port || port));
+mongodb.initDb((err, mongodb ) => {
+    if (err) {
+        console.log(err);
+    } else {
+        app.listen(port);
+    }
+    });
+console.log('Web Server is listening at port '+ (port));
