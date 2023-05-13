@@ -10,6 +10,9 @@ const port = process.env.port || 3000;
 const app = express();
 
 // app and mongodb.initDb code from solution
+// Everything to do with Swagger gotten from
+// https://www.npmjs.com/package/swagger-autogen
+// and https://www.npmjs.com/package/swagger-ui-express
 
 app
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
