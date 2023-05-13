@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require("dotenv");
 const mongodb = require('./db/connect');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 dotenv.config();
 const port = process.env.port || 3000;
@@ -10,6 +12,7 @@ const app = express();
 // app and mongodb.initDb code from solution
 
 app
+    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     .use(bodyParser.json())
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');

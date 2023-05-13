@@ -6,6 +6,7 @@ const ObjectId = require('mongodb').ObjectId;
 // https://www.mongodb.com/docs/manual/reference/method/db.collection.deleteOne/
 
 const makeContact = async (req, res) => {
+    // #swagger.summary = 'W03 Make Contact'
     const contact = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -23,6 +24,7 @@ const makeContact = async (req, res) => {
 }
 
 const updateContact = async (req, res) => {
+    // #swagger.summary = 'W03 Update Contact'
     const contactId = new ObjectId(req.params.id);
     const contact = {
         firstName: req.body.firstName,
@@ -40,6 +42,7 @@ const updateContact = async (req, res) => {
 }
 
 const deleteContact = async (req, res) => {
+    // #swagger.summary = 'W03 Delete Contact'
     const contactId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().db('cse341').collection('contacts').deleteOne({_id: contactId});
     if(result.deletedCount > 0) {

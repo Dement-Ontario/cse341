@@ -4,6 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 // Code for getAllContacts, getOneContact, and ObjectId from the solution, I had to specify the db name for mine to work
 
 const getAllContacts = async (req,res,next) => {
+    // #swagger.summary = 'W02 Get All Contacts'
     const result = await mongodb.getDb().db('cse341').collection('contacts').find();
     result.toArray().then((lists) => {
         res.setHeader('Content-Type', 'application/json');
@@ -12,6 +13,7 @@ const getAllContacts = async (req,res,next) => {
 };
 
 const getOneContact = async (req,res,next) => {
+    // #swagger.summary = 'W02 Get One Contact'
     const contactId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().db('cse341').collection('contacts').find({_id: contactId});
     result.toArray().then((lists) => {
