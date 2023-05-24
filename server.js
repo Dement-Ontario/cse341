@@ -4,6 +4,7 @@ const mongodb = require('./db/connect');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const cors = require('cors');
 
 dotenv.config();
 const port = process.env.port || 3000;
@@ -15,13 +16,18 @@ const app = express();
 // and https://www.npmjs.com/package/swagger-ui-express
 
 app
+    .use(cors())
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     .use(bodyParser.json())
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         next();
     })
-    .use('/', require('./routes'));
+    .use('/', require('./routes'))
+
+process.on('uncaughtException', (err, origin) => {
+    console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+});
 
 mongodb.initDb((err, mongodb ) => {
     if (err) {

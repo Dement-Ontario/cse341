@@ -1,5 +1,6 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
+const { validationResult } = require('express-validator');
 
 // makeContact and updateContact made with help of solution (it mostly helped with the if/else statements),
 // deleteContact made using parts of updateContact and with help of
@@ -7,6 +8,10 @@ const ObjectId = require('mongodb').ObjectId;
 
 const makeContact = async (req, res) => {
     // #swagger.summary = 'W03 Make Contact'
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    }
     const contact = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -25,6 +30,10 @@ const makeContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
     // #swagger.summary = 'W03 Update Contact'
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    }
     const contactId = new ObjectId(req.params.id);
     const contact = {
         firstName: req.body.firstName,

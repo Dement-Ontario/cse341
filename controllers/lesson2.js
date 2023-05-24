@@ -6,7 +6,10 @@ const ObjectId = require('mongodb').ObjectId;
 const getAllContacts = async (req,res,next) => {
     // #swagger.summary = 'W02 Get All Contacts'
     const result = await mongodb.getDb().db('cse341').collection('contacts').find();
-    result.toArray().then((lists) => {
+    result.toArray((error, lists) => {
+        if(error) {
+            res.status(400).json(error || 'an error happened while getting contacts');
+        }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(lists);
     });
@@ -16,7 +19,10 @@ const getOneContact = async (req,res,next) => {
     // #swagger.summary = 'W02 Get One Contact'
     const contactId = new ObjectId(req.params.id);
     const result = await mongodb.getDb().db('cse341').collection('contacts').find({_id: contactId});
-    result.toArray().then((lists) => {
+    result.toArray((lists) => {
+        if(error) {
+            res.status(400).json(error || 'an error happened while getting contact');
+        }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(lists[0]);
     });
